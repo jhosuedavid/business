@@ -1,6 +1,8 @@
 import {useState, useMemo, useCallback} from 'react';
+import useApi from "./useApi";
 
 const useLogin = () => {
+    const {login} = useApi();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -17,7 +19,13 @@ const useLogin = () => {
     }, [email, password]);
 
     const signIn = useCallback(() => {
-        // console.log(email);
+        const isExist = login(email, password);
+        if (isExist) {
+            alert('El usuario existe');
+            window.location.href = '/dashboard';
+        } else {
+            alert('El user no esta registrado');
+        }
     }, [email, password]);
 
     return {

@@ -1,6 +1,8 @@
 import {useState, useMemo, useCallback} from "react";
+import useApi from "./useApi";
 
 const useRegister = () => {
+    const {register: registerUser} = useApi();
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -41,7 +43,15 @@ const useRegister = () => {
     ]);
 
     const register = useCallback(() => {
+        registerUser({
+            firstName,
+            lastName,
+            email,
+            password,
+            confirmPassword,
+        });
 
+        window.location.href = "/login"
     }, [
         firstName,
         lastName,
